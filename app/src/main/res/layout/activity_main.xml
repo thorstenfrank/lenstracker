@@ -48,7 +48,8 @@
         android:layout_marginTop="128dp"
         android:text="@string/buttonNewLenses"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textTimesUsed" />
+        app:layout_constraintTop_toBottomOf="@+id/textTimesUsed"
+        android:onClick="newLensesClicked"/>
 
     <Button
         android:id="@+id/buttonAddUsage"
@@ -57,5 +58,7 @@
         android:layout_marginEnd="32dp"
         android:text="@string/buttonAddUsage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonNewLenses" />
+        app:layout_constraintTop_toTopOf="@+id/buttonNewLenses"
+        android:onClick="addUsageClicked"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
