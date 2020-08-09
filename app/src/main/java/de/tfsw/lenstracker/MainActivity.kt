@@ -21,9 +21,12 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        readLensData()
+        JsonUtil.readLensDataFromFile(applicationContext.filesDir, lensData)
 
         updateUI()
+
+        Log.d(logTag, "App Context File Dir: " + applicationContext.filesDir)
+        Log.d(logTag, "Base Context File Dir: " + baseContext.filesDir)
     }
 
     fun newLensesClicked(view: View) {
@@ -40,15 +43,24 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
 
     override fun dateSelected(date: LocalDate, tag: String?) {
         Log.d(logTag, "Date selected for tag $tag: " + date.toString())
-        if (newLensesTag.equals(tag)) {
-            lensData.dateOpened = date
-            lensData.timesUsed.clear()
+        var refresh = false
+        when(tag) {
+            newLensesTag -> {
+                lensData.dateOpened = date
+                lensData.timesUsed.clear()
+                refresh = true
+            }
+            addUsageTag -> {
+                lensData.timesUsed.add(date)
+                refresh = true
+
+            }
+            else -> Log.w(logTag, "Unknown tag encountered: $tag")
+        }
+
+        if (refresh) {
+            JsonUtil.saveLensDataToFile(applicationContext.filesDir, lensData)
             updateUI()
-        } else if (addUsageTag.equals(tag)) {
-            lensData.timesUsed.add(date)
-            updateUI()
-        } else {
-            Log.w(logTag, "Unknown tag encountered: $tag")
         }
     }
 
@@ -70,13 +82,5 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
         val timesUsedText: TextView = findViewById(R.id.textTimesUsed)
         val timesUsed = lensData.timesUsed.size
         timesUsedText.text = resources.getQuantityString(R.plurals.textTimesUsed, timesUsed, timesUsed)
-    }
-
-    private fun readLensData() {
-        lensData.dateOpened = LocalDate.of(2020, 8, 2)
-        lensData.timesUsed.add(LocalDate.of(2020, 8, 1))
-        lensData.timesUsed.add(LocalDate.of(2020, 8, 3))
-        lensData.timesUsed.add(LocalDate.of(2020, 8, 4))
-        lensData.timesUsed.add(LocalDate.of(2020, 8, 7))
     }
 }
