@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
@@ -61,6 +62,13 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
         if (refresh) {
             JsonUtil.saveLensDataToFile(applicationContext.filesDir, lensData)
             updateUI()
+
+            Snackbar.make(
+                findViewById(R.id.myCoordinatorLayout),
+                R.string.dataSavedMessage,
+                Snackbar.LENGTH_SHORT
+            ).show()
+
         }
     }
 

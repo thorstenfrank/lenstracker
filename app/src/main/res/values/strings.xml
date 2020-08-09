@@ -4,6 +4,7 @@
     <string name="noLensesInUse">--- no lenses in use ---</string>
     <string name="buttonNewLenses">New Lenses</string>
     <string name="buttonAddUsage">Add Usage</string>
+    <string name="dataSavedMessage">Lensdata saved</string>
 
     <plurals name="textInUseSince">
         <item quantity="one">%1s (%2d day)</item>
