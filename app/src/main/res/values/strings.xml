@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Lenstracker</string>
+    <string name="labelInUseSince">Current lenses in use since</string>
+    <string name="noLensesInUse">--- no lenses in use ---</string>
+    <string name="buttonNewLenses">New Lenses</string>
+    <string name="buttonAddUsage">Add Usage</string>
+
+    <plurals name="textInUseSince">
+        <item quantity="one">%1s (%2d day)</item>
+        <item quantity="other">%1s (%2d days)</item>
+    </plurals>
+
+    <plurals name="textTimesUsed">
+        <item quantity="one">Used %1d time</item>
+        <item quantity="other">Used %1d times</item>
+    </plurals>
 </resources>
