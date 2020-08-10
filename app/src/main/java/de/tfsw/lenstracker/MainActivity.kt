@@ -35,9 +35,6 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         usageListView.layoutManager = llm
-
-        Log.d(logTag, "App Context File Dir: " + applicationContext.filesDir)
-        Log.d(logTag, "Base Context File Dir: " + baseContext.filesDir)
     }
 
     fun newLensesClicked(view: View) {
