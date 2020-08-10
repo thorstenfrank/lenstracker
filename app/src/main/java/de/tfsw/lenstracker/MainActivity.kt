@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
     fun deleteUsageClicked(view: View) {
         val index: Int = view.tag as Int
         lensData.timesUsed.removeAt(index)
-        updateUI()
+        saveDataAndRefreshUI()
     }
 
     private fun showDatePicker(tag: String?) {
@@ -107,15 +107,21 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
         }
 
         if (refresh) {
-            JsonUtil.saveLensDataToFile(applicationContext.filesDir, lensData)
-            updateUI()
-
-            Snackbar.make(
-                findViewById(R.id.myCoordinatorLayout),
-                R.string.dataSavedMessage,
-                Snackbar.LENGTH_SHORT
-            ).show()
+            saveDataAndRefreshUI()
         }
+
+    }
+
+    private fun saveDataAndRefreshUI() {
+        lensData.timesUsed.sort()
+        JsonUtil.saveLensDataToFile(applicationContext.filesDir, lensData)
+        updateUI()
+
+        Snackbar.make(
+            findViewById(R.id.myCoordinatorLayout),
+            R.string.dataSavedMessage,
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun updateUI() {
