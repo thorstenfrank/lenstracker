@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
             inUseSinceText.text = resources.getQuantityString(
                 R.plurals.textInUseSince,
                 numberOfDays,
-                lensData.dateOpened?.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)),
+                lensData.dateOpened?.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)),
                 numberOfDays
             )
         }
