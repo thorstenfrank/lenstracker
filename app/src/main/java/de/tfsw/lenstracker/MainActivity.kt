@@ -49,7 +49,9 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
     }
 
     fun deleteUsageClicked(view: View) {
-        Log.d(logTag, "Delete clicked: " + view.tag)
+        val index: Int = view.tag as Int
+        lensData.timesUsed.removeAt(index)
+        updateUI()
     }
 
     private fun showDatePicker(tag: String?) {
