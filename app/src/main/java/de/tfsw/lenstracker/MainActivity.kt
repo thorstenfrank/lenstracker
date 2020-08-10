@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import java.time.LocalDate
 import java.time.Period
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
     private val newLensesTag = "newLensesPicker"
     private val addUsageTag = "addUsagePicker"
     private val lensData = LensData()
+    private var adapter = UsageViewAdapter(lensData.timesUsed)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +29,12 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
         JsonUtil.readLensDataFromFile(applicationContext.filesDir, lensData)
 
         updateUI()
+
+        val usageListView = findViewById<RecyclerView>(R.id.usageListView)
+        usageListView.adapter = adapter
+        val llm = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        usageListView.layoutManager = llm
 
         Log.d(logTag, "App Context File Dir: " + applicationContext.filesDir)
         Log.d(logTag, "Base Context File Dir: " + baseContext.filesDir)
@@ -120,5 +129,7 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
         val timesUsedText: TextView = findViewById(R.id.textTimesUsed)
         val timesUsed = lensData.timesUsed.size
         timesUsedText.text = resources.getQuantityString(R.plurals.textTimesUsed, timesUsed, timesUsed)
+
+        adapter.notifyDataSetChanged()
     }
 }
