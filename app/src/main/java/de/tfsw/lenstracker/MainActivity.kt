@@ -1,5 +1,6 @@
 package de.tfsw.lenstracker
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -31,19 +32,49 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
     }
 
     fun newLensesClicked(view: View) {
-        val newFragment = DatePickerFragment()
-        newFragment.listener = this
-        newFragment.show(supportFragmentManager, newLensesTag)
+        showDatePicker(newLensesTag)
     }
 
     fun addUsageClicked(view: View) {
-        val newFragment = DatePickerFragment()
-        newFragment.listener = this
-        newFragment.show(supportFragmentManager, addUsageTag)
+        showDatePicker(addUsageTag)
+    }
+
+    private fun showDatePicker(tag: String?) {
+        if (!tag.isNullOrEmpty()) {
+            val newFragment = DatePickerFragment()
+            newFragment.listener = this
+            newFragment.show(supportFragmentManager, tag)
+        }
     }
 
     override fun dateSelected(date: LocalDate, tag: String?) {
-        Log.d(logTag, "Date selected for tag $tag: " + date.toString())
+        if (validateDateSelection(date, tag)) {
+            updateValues(date, tag)
+        }
+    }
+
+    private fun validateDateSelection(date: LocalDate, tag: String?): Boolean {
+        if (date.isAfter(LocalDate.now())) {
+            showValidationErrorDialog(R.string.validationErrorDateFuture, tag)
+            return false
+        } else if (addUsageTag == tag && date.isBefore(lensData.dateOpened)) {
+            showValidationErrorDialog(R.string.validationErrorUsageBeforeOpening, tag)
+            return false
+        } else {
+            return true
+        }
+    }
+
+    private fun showValidationErrorDialog(messageId: Int, tag: String?) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.validationErrorTitle)
+            .setMessage(messageId)
+            .setCancelable(false)
+            .setPositiveButton(R.string.validationDialogOK) { _, _ ->  showDatePicker(tag)}
+            .show()
+    }
+
+    private fun updateValues(date: LocalDate, tag: String?) {
         var refresh = false
         when(tag) {
             newLensesTag -> {
@@ -68,7 +99,6 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
                 R.string.dataSavedMessage,
                 Snackbar.LENGTH_SHORT
             ).show()
-
         }
     }
 
