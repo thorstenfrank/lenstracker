@@ -48,6 +48,10 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
         showDatePicker(addUsageTag)
     }
 
+    fun deleteUsageClicked(view: View) {
+        Log.d(logTag, "Delete clicked: " + view.tag)
+    }
+
     private fun showDatePicker(tag: String?) {
         if (!tag.isNullOrEmpty()) {
             val newFragment = DatePickerFragment()
@@ -63,15 +67,16 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
     }
 
     private fun validateDateSelection(date: LocalDate, tag: String?): Boolean {
+        var validationPassed = true
         if (date.isAfter(LocalDate.now())) {
             showValidationErrorDialog(R.string.validationErrorDateFuture, tag)
-            return false
+            validationPassed = false
         } else if (addUsageTag == tag && date.isBefore(lensData.dateOpened)) {
             showValidationErrorDialog(R.string.validationErrorUsageBeforeOpening, tag)
-            return false
-        } else {
-            return true
+            validationPassed = false
         }
+
+        return validationPassed
     }
 
     private fun showValidationErrorDialog(messageId: Int, tag: String?) {

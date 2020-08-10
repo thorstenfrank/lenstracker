@@ -9,6 +9,7 @@
     <string name="validationErrorDateFuture">Selected date cannot be in the future!</string>
     <string name="validationErrorUsageBeforeOpening">Using lenses before the package was opened?</string>
     <string name="validationDialogOK">OK</string>
+    <string name="delete_usage_list_item">Delete List Item</string>
 
     <plurals name="textInUseSince">
         <item quantity="one">%1s (%2d day)</item>

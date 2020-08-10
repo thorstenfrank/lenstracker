@@ -13,6 +13,7 @@ class UsageViewAdapter(private val dataset: List<LocalDate>): RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: UsageViewHolder, position: Int) {
         holder.updateText(dataset[position])
+        holder.setItemIndex(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsageViewHolder {
