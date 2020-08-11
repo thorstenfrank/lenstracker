@@ -28,13 +28,13 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
 
         JsonUtil.readLensDataFromFile(applicationContext.filesDir, lensData)
 
-        updateUI()
-
         val usageListView = findViewById<RecyclerView>(R.id.usageListView)
         usageListView.adapter = adapter
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         usageListView.layoutManager = llm
+
+        updateUI()
     }
 
     fun newLensesClicked(view: View) {
