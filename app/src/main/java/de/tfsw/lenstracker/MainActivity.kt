@@ -1,6 +1,7 @@
 package de.tfsw.lenstracker
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -46,9 +47,7 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
     }
 
     fun deleteUsageClicked(view: View) {
-        val index: Int = view.tag as Int
-        lensData.timesUsed.removeAt(index)
-        saveDataAndRefreshUI()
+        showConfirmDeleteUsageDialog(view.tag as Int)
     }
 
     private fun showDatePicker(tag: String?) {
@@ -83,8 +82,26 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
             .setTitle(R.string.validationErrorTitle)
             .setMessage(messageId)
             .setCancelable(false)
-            .setPositiveButton(R.string.validationDialogOK) { _, _ ->  showDatePicker(tag)}
+            .setPositiveButton(R.string.OK) { _, _ ->  showDatePicker(tag)}
             .show()
+    }
+
+    private fun showConfirmDeleteUsageDialog(index: Int) {
+        val message = resources.getString(
+            R.string.confirmDeleteDialogMessage,
+            lensData.timesUsed[index].format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)))
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.confirmDeleteDialogTitle)
+            .setMessage(message)
+            .setPositiveButton(R.string.OK) { _, _: Int -> deleteTimeUsed(index) }
+            .setNegativeButton(R.string.Cancel) {_, _  -> } // do nothing...
+            .show()
+    }
+
+    private fun deleteTimeUsed(index: Int) {
+        lensData.timesUsed.removeAt(index)
+        saveDataAndRefreshUI()
     }
 
     private fun updateValues(date: LocalDate, tag: String?) {
