@@ -1,14 +1,15 @@
 package de.tfsw.lenstracker
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import java.time.LocalDate
 import java.time.Period
@@ -23,6 +24,16 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
     private val lensData = LensData()
     private var adapter = UsageViewAdapter(lensData.timesUsed)
 
+    // FAB
+    private var fabOpen = false
+    private var fabBGLayout: View? = null
+    private var fabLayout1: LinearLayout? = null
+    private var fabLayout2: LinearLayout? = null
+    private var fab: FloatingActionButton? = null
+    private var fab1: FloatingActionButton? = null
+    private var fab2: FloatingActionButton? = null
+    private var fabAnimationListener: FabAnimationListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,19 +46,75 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
         llm.orientation = LinearLayoutManager.VERTICAL
         usageListView.layoutManager = llm
 
+        initFAB()
+
         updateUI()
     }
 
+    override fun onBackPressed() {
+        when(fabOpen) {
+            true -> closeFabMenu()
+            else -> super.onBackPressed()
+        }
+    }
+
+    private fun initFAB() {
+        fabBGLayout = findViewById(R.id.fabBGLayout)
+        fabBGLayout?.setOnClickListener { _ -> closeFabMenu() }
+
+        fab = findViewById(R.id.fab)
+
+        fabLayout1 = findViewById(R.id.fabLayout1)
+        fab1 = findViewById(R.id.fab1)
+
+        fabLayout2 = findViewById(R.id.fabLayout2)
+        fab2 = findViewById(R.id.fab2)
+
+        fabAnimationListener = FabAnimationListener(arrayOf(fabLayout1!!, fabLayout2!!))
+    }
+
     fun newLensesClicked(view: View) {
+        closeFabMenu()
         showDatePicker(newLensesTag)
     }
 
     fun addUsageClicked(view: View) {
+        closeFabMenu()
         showDatePicker(addUsageTag)
     }
 
     fun deleteUsageClicked(view: View) {
         showConfirmDeleteUsageDialog(view.tag as Int)
+    }
+
+    fun fabClicked(view: View) {
+        if (!fabOpen) {
+            showFabMenu()
+        } else {
+            closeFabMenu()
+        }
+    }
+
+    private fun showFabMenu() {
+        fabOpen = true
+        fabAnimationListener?.isFabOpen = fabOpen
+        fabBGLayout?.visibility = View.VISIBLE
+        fabLayout1?.visibility = View.VISIBLE
+        fabLayout2?.visibility = View.VISIBLE
+
+        fab?.animate()?.rotationBy(180F)
+
+        fabLayout1?.animate()?.translationY(10F)
+        fabLayout2?.animate()?.translationY(20F)
+    }
+
+    private fun closeFabMenu() {
+        fabOpen = false
+        fabBGLayout?.visibility = View.GONE
+        fab?.animate()?.rotation(0F)
+        fabAnimationListener?.isFabOpen = fabOpen
+        fabLayout1?.animate()?.translationY(0F)
+        fabLayout2?.animate()?.translationY(0F)?.setListener(fabAnimationListener)
     }
 
     private fun showDatePicker(tag: String?) {
