@@ -175,12 +175,11 @@ class MainActivity : AppCompatActivity(), DatePickerFragment.DatePickerFragmentL
         var refresh = false
         when(tag) {
             newLensesTag -> {
-                lensData.dateOpened = date
-                lensData.timesUsed.clear()
+                lensData.newLens(date)
                 refresh = true
             }
             addUsageTag -> {
-                lensData.timesUsed.add(date)
+                lensData.addLensUsage(date)
                 refresh = true
 
             }
