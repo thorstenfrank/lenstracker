@@ -17,7 +17,7 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         val now = LocalDate.now();
 
         // Create a new instance of DatePickerDialog and return it
-        return DatePickerDialog(activity!!, this, now.year, now.monthValue - 1, now.dayOfMonth)
+        return DatePickerDialog(requireActivity(), this, now.year, now.monthValue - 1, now.dayOfMonth)
     }
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
