@@ -23,7 +23,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/delete_usage_list_item"
-        app:srcCompat="@drawable/ic_baseline_delete_24"
-        android:onClick="deleteUsageClicked"/>
+        android:onClick="deleteUsageClicked"
+        app:srcCompat="@drawable/ic_baseline_delete_24" />
 
 </RelativeLayout>

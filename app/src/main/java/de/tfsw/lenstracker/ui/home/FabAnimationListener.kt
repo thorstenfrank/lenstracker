@@ -1,7 +1,6 @@
-package de.tfsw.lenstracker
+package de.tfsw.lenstracker.ui.home
 
 import android.animation.Animator
-import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 
@@ -9,22 +8,17 @@ class FabAnimationListener(private val layouts: Array<LinearLayout>): Animator.A
 
     var isFabOpen = false
 
-    override fun onAnimationRepeat(animation: Animator?) {
-
-    }
+    override fun onAnimationStart(animation: Animator?) {}
 
     override fun onAnimationEnd(animation: Animator?) {
         if (!isFabOpen) {
-            Log.d("FabAnimationListener", "Closing FAB Menu")
             layouts.forEach { layout -> layout.visibility = View.GONE }
         }
     }
 
-    override fun onAnimationCancel(animation: Animator?) {
+    override fun onAnimationRepeat(animation: Animator?) {}
 
-    }
+    override fun onAnimationCancel(animation: Animator?) {}
 
-    override fun onAnimationStart(animation: Animator?) {
 
-    }
 }

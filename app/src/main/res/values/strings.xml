@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Lenstracker</string>
+
+    <!-- Common -->
+    <string name="OK">OK</string>
+    <string name="Cancel">Cancel</string>
+
+    <!-- Home Fragment -->
+    <string name="title_home">Home</string>
     <string name="labelInUseSince">Current lenses in use since</string>
     <string name="noLensesInUse">--- no lenses in use ---</string>
     <string name="buttonNewLenses">New Lenses</string>
@@ -12,9 +19,6 @@
     <string name="confirmDeleteDialogTitle">Confirm delete</string>
     <string name="confirmDeleteDialogMessage">Really delete usage on %1s?</string>
 
-    <string name="OK">OK</string>
-    <string name="Cancel">Cancel</string>
-
     <plurals name="textInUseSince">
         <item quantity="one">%1s (%2d day)</item>
         <item quantity="other">%1s (%2d days)</item>
@@ -24,4 +28,13 @@
         <item quantity="one">Used %1d time</item>
         <item quantity="other">Used %1d times</item>
     </plurals>
+
+    <!-- History -->
+    <string name="title_history">History</string>
+    <string name="history_label_first_opened">First Lens Opened: %1s</string>
+    <string name="history_label_total_lenses">Total Lenses Used: %1d</string>
+    <string name="history_label_total_usage">Total lens usage: %1d</string>
+    <string name="history_button_reset">Reset</string>
+    <string name="history_reset_confirm_title">Confirm Reset</string>
+    <string name="history_reset_confirm_message">Are you sure you want to reset your history? This can NOT be undone!</string>
 </resources>

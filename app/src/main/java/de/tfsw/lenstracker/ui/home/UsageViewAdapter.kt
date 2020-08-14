@@ -1,18 +1,19 @@
-package de.tfsw.lenstracker
+package de.tfsw.lenstracker.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import java.time.LocalDate
+import de.tfsw.lenstracker.LensData
+import de.tfsw.lenstracker.R
 
-class UsageViewAdapter(private val dataset: List<LocalDate>): RecyclerView.Adapter<UsageViewHolder>() {
+class UsageViewAdapter: RecyclerView.Adapter<UsageViewHolder>() {
 
     override fun getItemCount(): Int {
-        return dataset.size
+        return LensData.timesUsed.size
     }
 
     override fun onBindViewHolder(holder: UsageViewHolder, position: Int) {
-        holder.updateText(dataset[position])
+        holder.updateText(LensData.timesUsed[position])
         holder.setItemIndex(position)
     }
 
